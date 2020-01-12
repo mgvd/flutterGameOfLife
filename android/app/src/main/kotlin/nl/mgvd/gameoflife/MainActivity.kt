@@ -1,4 +1,4 @@
-package com.example.gameoflife
+package nl.mgvd.gameoflife
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

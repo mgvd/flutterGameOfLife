@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flame/time.dart';
 import 'package:flutter/material.dart';
 import 'package:gameoflife/components/cell.dart';
 import 'package:gameoflife/game-controller.dart';
@@ -9,6 +10,8 @@ class CellController {
 
   List<List<Cell>> cells = List();
 
+  Timer gameTimer;
+
   CellController(this.gc) {
     initialize();
   }
@@ -16,8 +19,12 @@ class CellController {
   void initialize() {
 
     cells = List.generate(gc.xSize, (_) => List(gc.ySize));
+    gameTimer = Timer(1/30, repeat: true, callback: recalculate);
 
     randomize();
+    gameTimer.start();
+    fillBorders();
+
   }
 
   void render(Canvas c) {
@@ -28,7 +35,25 @@ class CellController {
     }
   }
 
+  void fillBorders() {
+    for (var x = 0; x < cells.length; x++) {
+      cells[x][0].active = true;
+      cells[x][cells[x].length-1].active = true;
+    }
+
+      for (var y = 0; y < gc.ySize; y++) {
+        cells[0][y].active = true;
+      cells[cells.length-1][y].active = true;
+      }
+    
+  }
+
   void update(double t) {
+    gameTimer.update(t);
+    
+  }
+
+  void recalculate() {
     List<List<Cell>> newCells = List.generate(gc.xSize, (_) => List(gc.ySize));
     int neighbours;
     for (var x = 0; x < cells.length; x++) {

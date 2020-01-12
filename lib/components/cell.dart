@@ -14,11 +14,13 @@ class Cell {
   void render(Canvas c) {
     Paint cellPaint = Paint();
     Rect cellRect;
+
+    // double middleOffsetX = gc.xSize * gc.cellSize / 2;
+    // double middleOffsetY = gc.ySize * gc.cellSize / 2;
     
     cellRect = Rect.fromLTWH(
-        x * gc.cellSize + gc.offset.dx + gc.saveOffset.dx, y * gc.cellSize + gc.offset.dy+gc.saveOffset.dy, gc.cellSize, gc.cellSize);
-    // cellRect.shift(gc.saveOffset);    
-    //cellRect.translate(gc.offset.dx, gc.offset.dy);    
+        x * gc.cellSize + gc.offset.dx + gc.saveOffset.dx, y * gc.cellSize + gc.offset.dy+gc.saveOffset.dy, gc.cellSize, gc.cellSize); 
+    cellRect.translate(30,30);
     active ? cellPaint.color = Colors.white : cellPaint.color = Colors.black;
     c.drawRect(cellRect, cellPaint);
   }
